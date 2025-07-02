@@ -171,4 +171,3 @@ document.addEventListener('DOMContentLoaded', () => {
   closeIcon.addEventListener('click', closePopup);
   overlay.addEventListener('click', closePopup);
 });
-
