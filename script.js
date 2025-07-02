@@ -171,5 +171,4 @@ document.addEventListener('DOMContentLoaded', () => {
   closeIcon.addEventListener('click', closePopup);
   overlay.addEventListener('click', closePopup);
 });
-'use strict'
-// ここに JavaScript のコードを書きましょう
+
