@@ -1,7 +1,3 @@
-.history{
-    background-color: blue;
-}
-
 body {
   font-family: sans-serif;
 }
@@ -102,7 +98,4 @@ tr:nth-child(even) {
 #popup-content table th,
 #popup-content table td {
   padding: 6px;
-}
-h-child(even) {
-    background-color: #f9f9f9;
 }
