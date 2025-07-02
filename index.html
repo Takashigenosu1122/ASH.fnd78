@@ -1,78 +1,80 @@
-<!-- ここに HTML のコードを書きましょう。index.html というファイルの名前は変更しないでください -->
+
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title>タイトル</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+  <title>鍵管理システム</title>
 </head>
+<body>
+  <div class="header">
+    <h1>鍵管理システム</h1>
+  </div>
 
- <body>
-    <div class="header">
-      <h1>鍵：貸出・返却</h1>
-      <button onclick="goToHistory()">履歴を見る</button>
-    </div>
+  <div class="table-container">
+    <!-- 左の表（教室） -->
+    <table class="key-table">
+      <thead>
+        <tr>
+          <th>教室</th><th>貸出者</th><th>貸出時間</th><th>返却時間</th><th>返却者</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 通常教室 -->
+        <tr><th id="room-1A" class="clickable">1-A</th><td id="name-1A"></td><td></td><td></td><td></td></tr>
+        <tr><th id="room-1B" class="clickable">1-B</th><td id="name-1B"></td><td></td><td></td><td></td></tr>
+        <tr><th id="room-1C" class="clickable">1-C</th><td id="name-1C"></td><td></td><td></td><td></td></tr>
+        <tr><th id="room-1D" class="clickable">1-D</th><td id="name-1D"></td><td></td><td></td><td></td></tr>
+        <tr><th id="room-1E" class="clickable">1-E</th><td id="name-1E"></td><td></td><td></td><td></td></tr>
 
-    <div class="table-container">
-  <!-- 左の表 -->
-  <table class="key-table">
-    <thead>
-      <tr>
-        <th>教室</th>
-        <th>氏名</th>
-        <th>貸出時間</th>
-        <th>返却時間</th>
-        <th>氏名</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><th>1-A</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>1-B</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>1-C</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>1-D</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>1-E</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>2/3-A</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>2/3-B</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>2/3-C</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>2/3-D</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>専-A</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>専-B</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>専-C</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>専-D</th><td></td><td></td><td></td><td></td></tr>
-    </tbody>
-  </table>
+        <tr><th id="room-2_3A" class="clickable">2/3-A</th><td id="name-2_3A"></td><td></td><td></td><td></td></tr>
+        <tr><th id="room-2_3B" class="clickable">2/3-B</th><td id="name-2_3B"></td><td></td><td></td><td></td></tr>
+        <tr><th id="room-2_3C" class="clickable">2/3-C</th><td id="name-2_3C"></td><td></td><td></td><td></td></tr>
+        <tr><th id="room-2_3D" class="clickable">2/3-D</th><td id="name-2_3D"></td><td></td><td></td><td></td></tr>
 
-  <!-- 右の表 -->
-  <table class="key-table">
-    <thead>
-      <tr>
-        <th>教室</th>
-        <th>氏名</th>
-        <th>貸出時間</th>
-        <th>返却時間</th>
-        <th>氏名</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><th>剣道部</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>陸上部</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>硬式野球部</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>サッカー部</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>バレー/バスケ部</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>モノ部</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>音楽室</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>教材準備室</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>自動車教室</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>体育倉庫</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>電気実習室</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>製図室</th><td></td><td></td><td></td><td></td></tr>
-      <tr><th>図書室</th><td></td><td></td><td></td><td></td></tr>
-      <!-- 他の行も追加 -->
-    </tbody>
-  </table>
-</div>
+        <!-- 専門教室 -->
+        <tr><th id="room-specialA" class="clickable">専-A</th><td id="name-specialA"></td><td></td><td></td><td></td></tr>
+        <tr><th id="room-specialB" class="clickable">専-B</th><td id="name-specialB"></td><td></td><td></td><td></td></tr>
+        <tr><th id="room-specialC" class="clickable">専-C</th><td id="name-specialC"></td><td></td><td></td><td></td></tr>
+        <tr><th id="room-specialD" class="clickable">専-D</th><td id="name-specialD"></td><td></td><td></td><td></td></tr>
+      </tbody>
+    </table>
+
+    <!-- 右の表（部活動・設備） -->
+    <table class="key-table">
+      <thead>
+        <tr>
+          <th>教室</th><th>貸出者</th><th>貸出時間</th><th>返却時間</th><th>返却者</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th id="room-kendo" class="clickable">剣道部</th><td id="name-kendo"></td><td></td><td></td><td></td></tr>
+        <tr><th id="room-rikujo" class="clickable">陸上部</th><td id="name-rikujo"></td><td></td><td></td><td></td></tr>
+        <tr><th id="room-baseball" class="clickable">硬式野球部</th><td id="name-baseball"></td><td></td><td></td><td></td></tr>
+        <tr><th id="room-soccer" class="clickable">サッカー部</th><td id="name-soccer"></td><td></td><td></td><td></td></tr>
+        <tr><th id="room-volley_basket" class="clickable">バレー/バスケ部</th><td id="name-volley_basket"></td><td></td><td></td><td></td></tr>
+        <tr><th id="room-mono" class="clickable">モノ部</th><td id="name-mono"></td><td></td><td></td><td></td></tr>
+        <tr><th id="room-music" class="clickable">音楽室</th><td id="name-music"></td><td></td><td></td><td></td></tr>
+        <tr><th id="room-kyozai" class="clickable">教材準備室</th><td id="name-kyozai"></td><td></td><td></td><td></td></tr>
+        <tr><th id="room-car" class="clickable">自動車教室</th><td id="name-car"></td><td></td><td></td><td></td></tr>
+        <tr><th id="room-taiku" class="clickable">体育倉庫</th><td id="name-taiku"></td><td></td><td></td><td></td></tr>
+        <tr><th id="room-denki" class="clickable">電気実習室</th><td id="name-denki"></td><td></td><td></td><td></td></tr>
+        <tr><th id="room-seizu" class="clickable">製図室</th><td id="name-seizu"></td><td></td><td></td><td></td></tr>
+        <tr><th id="room-library" class="clickable">図書室</th><td id="name-library"></td><td></td><td></td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ポップアップとオーバーレイ -->
+  <div id="overlay"></div>
+  <div id="popup">
+    <span id="closeIcon" class="close-icon">×</span>
+    <div id="popup-content"></div>
+  </div>
+</body>
+</html>
 
 
        
