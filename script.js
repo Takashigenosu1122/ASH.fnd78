@@ -340,6 +340,37 @@ document.getElementById('historyBtn').addEventListener('click', showHistory);
     populateRenameSelect();
     msg.textContent = `${oldName} を ${newName} に変更しました。`;
   });
+
+  document.getElementById('addEmployeeBtn').addEventListener('click', () => {
+  const number = document.getElementById('newEmpNumber').value.trim();
+  const name = document.getElementById('newEmpName').value.trim();
+  const msg = document.getElementById('employeeAddMessage');
+
+  msg.textContent = '';
+
+  if (!/^\d{7}$/.test(number)) {
+    msg.textContent = '⚠️ 従業員番号は7桁の数字で入力してください';
+    return;
+  }
+
+  if (!name) {
+    msg.textContent = '⚠️ 氏名を入力してください';
+    return;
+  }
+
+  if (employeeData[number]) {
+    msg.textContent = '⚠️ その従業員番号はすでに存在します';
+    return;
+  }
+
+  employeeData[number] = name;
+  localStorage.setItem('employeeData', JSON.stringify(employeeData));
+  msg.textContent = `✅ ${name} さんを追加しました`;
+  document.getElementById('newEmpNumber').value = '';
+  document.getElementById('newEmpName').value = '';
+});
+
+
 });
  
  
