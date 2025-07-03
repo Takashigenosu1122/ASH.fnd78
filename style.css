@@ -1,10 +1,13 @@
+/* 全体設定 */
 body {
   background-color: #f0f8ff;
   font-family: "M PLUS Rounded 1c", "Noto Sans JP", sans-serif;
   margin: 0;
   padding: 0;
+  position: relative;
 }
  
+/* ヘッダー */
 .header {
   background-color: #5a89d6;
   color: white;
@@ -15,7 +18,7 @@ body {
   border-radius: 0 0 15px 15px;
 }
  
-/* 表コンテナ：高さを画面に合わせる＋2列並び */
+/* 2列レイアウト */
 .table-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -24,7 +27,7 @@ body {
   height: calc(100vh - 100px);
 }
  
-/* 各テーブル：高さ100%＋均等幅＋ズレ防止 */
+/* テーブル基本設定 */
 table.key-table {
   width: 100%;
   height: 100%;
@@ -33,7 +36,7 @@ table.key-table {
   font-size: small;
 }
  
-/* セル共通スタイル */
+/* セル共通 */
 th, td {
   border: 1px solid #333;
   padding: 8px;
@@ -41,13 +44,13 @@ th, td {
   vertical-align: middle;
 }
  
-/* 見出しの背景 */
+/* テーブル見出し */
 .key-table th {
   background-color: #87cefa;
   color: white;
 }
  
-/* 交互に背景色 */
+/* 交互背景 */
 .key-table tbody tr:nth-child(odd) {
   background-color: #e3f2fd;
 }
@@ -55,12 +58,13 @@ th, td {
   background-color: #fffde6;
 }
  
-/* マウスホバー時 */
+/* ホバー可能セル */
 .clickable:hover {
   background-color: palevioletred;
   cursor: pointer;
 }
  
+/* ステータスバッジ */
 .status {
   display: inline-flex;
   align-items: center;
@@ -72,20 +76,16 @@ th, td {
   font-weight: bold;
   margin-left: 4px;
 }
- 
-/* 貸出中 */
 .status.lent {
   background-color: #ffaaaa;
   color: crimson;
 }
- 
-/* 返却済 */
 .status.returned {
   background-color: #aaffaa;
   color: green;
 }
  
-/* ポップアップ背景 */
+/* ポップアップオーバーレイ */
 #overlay {
   display: none;
   position: fixed;
@@ -97,7 +97,7 @@ th, td {
   z-index: 900;
 }
  
-/* ポップアップ本体（色付き） */
+/* ポップアップウィンドウ */
 #popup {
   display: none;
   position: fixed;
@@ -107,8 +107,8 @@ th, td {
   width: 400px;
   max-height: 90vh;
   overflow-y: auto;
-  background: #fff8f0; /* 柔らかいクリーム色 */
-  border: 5px solid #ffb347; /* 明るいオレンジ枠 */
+  background-color: #ffffff;  /*ポップアップの色*/
+  border: 5px solid #525151;
   padding: 20px;
   z-index: 901;
   transition: width 0.3s ease;
@@ -121,41 +121,82 @@ th, td {
   right: 15px;
   font-size: 24px;
   cursor: pointer;
+  z-index: 1002;
 }
  
+/* ポップアップ内コンテンツ */
 #popup-content {
   margin-bottom: 10px;
   font-size: 18px;
+  color: #1a2b4c;
 }
- 
-/* ポップアップ内の見出し */
 #popup-content h2 {
-  color: #ff7f50; /* コーラル色 */
+  color: #474747;
   margin-bottom: 10px;
 }
  
-/* ポップアップ内のボタン */
+.popup-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+ 
+ 
 .popup-buttons {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap; /* 必要なら折り返しも可能 */
+  gap: 10px;       /* ボタン間の余白 */
   margin-top: 15px;
 }
  
+ 
 .popup-buttons button {
-  padding: 8px 16px;
-  font-size: 14px;
-  background-color: #ffb347;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  transition: background-color 0.3s;
+ padding: 10px 20px;
+ font-size: 16px;
+ color: white;
+ border: none;
+ border-radius: 30px; /* 丸みを強調 */
+ display: flex;
+ align-items: center;
+ gap: 8px;
+ transition: background-color 0.3s;
+ box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
  
-.popup-buttons button:hover {
-  background-color: #ff944d;
+ 
+/* 貸出ボタン：元気なオレンジ系 */
+#lendBtn {
+  background-color: #32cd32; /* ライムグリーン */
+}
+#lendBtn:hover {
+  background-color: #228b22; /* フォレストグリーン */
 }
  
-/* 履歴表示用のテーブル */
+/* 返却ボタン：安心感のある緑系 */
+#returnBtn {
+  background-color: #ffa500; /* オレンジ */
+}
+#returnBtn:hover {
+  background-color: #ff8c00; /* 濃いオレンジ */
+}
+ 
+/* 履歴ボタン：落ち着いた青系 */
+#historyBtn {
+  background-color: #4682b4; /* スチールブルー */
+}
+#historyBtn:hover {
+  background-color: #4169e1; /* ロイヤルブルー */
+}
+ 
+/* 履歴用テーブル */
 #popup-content table {
   width: 100%;
   font-size: 14px;
@@ -163,18 +204,17 @@ th, td {
   border-collapse: collapse;
   margin-bottom: 10px;
 }
- 
 #popup-content table th {
   background-color: #87cefa;
   color: white;
   padding: 6px;
 }
- 
 #popup-content table td {
   background-color: #ffffff;
   padding: 6px;
 }
  
+/* 教室名の省略表示 */
 .room-name {
   display: inline-block;
   white-space: nowrap;
@@ -185,6 +225,7 @@ th, td {
   vertical-align: middle;
 }
  
+/* 入力欄 */
 #employeeNumber,
 #editEmployeeNumber,
 #editName {
@@ -196,5 +237,183 @@ th, td {
   border-radius: 8px;
   box-sizing: border-box;
 }
+ 
+/* 1. ハンバーガーメニューは一番上に */
+.menu-icon {
+  position: fixed;
+  top: 10px;
+  right: 15px;
+  font-size: 26px;
+  cursor: pointer;
+  z-index: 2000;  /* ← ここを十分に大きくする！ */
+}
+ 
+/* 2. overlay/adminOverlay は z-index をハンバーガーより下に */
+#overlay,
+#adminOverlay {
+  z-index: 900;  /* ← ハンバーガー(2000)より下に */
+}
+ 
+/* 3. adminPopup や popup は 1000〜1100 に収めておく */
+#popup,
+#adminPopup {
+  z-index: 1001;
+}
+ 
+ 
+/* 管理者パネルの背景 */
+#adminOverlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+}
+ 
+/* 管理者パネル本体 */
+#adminPopup {
+  display: none;
+  width: 600px;
+  max-height: 90vh;
+  padding: 30px 20px 20px;
+  background-color: white;
+  border-radius: 10px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  z-index: 1001;
+  transition: height 0.3s ease;
+  overflow: hidden;
+}
+#adminPopup .close-icon {
+  top: 8px;
+  right: 12px;
+  z-index: 1002;
+}
+ 
+/* 管理者ログイン */
+#adminLoginSection {
+  display: none;
+  margin-top: 30px;
+}
+ 
+/* 管理者パネル内部 */
+#adminPanel {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #fef6e4;
+  border: 2px solid #ffb347;
+  border-radius: 10px;
+  max-height: none;
+  overflow: visible;
+}
+ 
+#adminPopup input[type="password"],
+#adminPopup input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+#adminPopup button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 8px;
+  background-color: #5a89d6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+ 
+/* 教室履歴リスト */
+#roomHistoryList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+ 
+/* 各教室の履歴ボックス */
+.room-history {
+  background-color: #fff;
+  border: 2px solid #87cefa;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  min-width: 120px;
+  text-align: center;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+ 
+/* ホバー */
+.room-history:hover {
+  background-color: #e0f7fa;
+  transform: scale(1.05);
+}
+ 
+/* 件数強調 */
+.room-history .count {
+  color: #ff6347;
+  font-weight: bold;
+}
+ 
+/* 履歴の操作列：貸出 */
+.action-lend {
+  background-color: #d0f5d0; /* 明るいグリーン背景 */
+  color: #2e7d32;            /* 濃いグリーン文字 */
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 4px 8px;
+}
+ 
+/* 履歴の操作列：返却 */
+.action-return {
+  background-color: #ffe0b2; /* 明るいオレンジ背景 */
+  color: #e65100;            /* 濃いオレンジ文字 */
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 4px 8px;
+}
+ 
+#confirmYes {
+  background-color: #32cd32; /* ライムグリーン */
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+#confirmYes:hover {
+  background-color: #228b22; /* フォレストグリーン */
+}
+ 
+#confirmNo {
+  background-color: #ff6347; /* トマトレッド */
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+#confirmNo:hover {
+  background-color: #cc3b2e; /* 濃い赤 */
+}
+ 
+ 
+ 
  
  
