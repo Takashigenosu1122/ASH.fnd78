@@ -11,27 +11,25 @@
 <body>
   <div class="header">🔑 鍵管理システム</div>
   <div class="menu-icon" id="menuIcon">☰</div>
-
+ 
   <div class="table-container">
-    <!-- 左側（1年、2/3年、専門教室） -->
+    <!-- 左側 -->
     <table class="key-table">
       <thead>
         <tr><th>教室</th><th>貸出者</th><th>貸出時間</th><th>返却時間</th><th>返却者</th></tr>
       </thead>
-      <tbody>
+      <tbody id="left-table-body">
         <!-- 1年 -->
         <tr><th id="room-1A" class="clickable"><span class="room-name">1-A</span><span id="status-1A" class="status returned"></span></th><td id="name-1A"></td><td></td><td></td><td></td></tr>
         <tr><th id="room-1B" class="clickable"><span class="room-name">1-B</span><span id="status-1B" class="status returned"></span></th><td id="name-1B"></td><td></td><td></td><td></td></tr>
         <tr><th id="room-1C" class="clickable"><span class="room-name">1-C</span><span id="status-1C" class="status returned"></span></th><td id="name-1C"></td><td></td><td></td><td></td></tr>
         <tr><th id="room-1D" class="clickable"><span class="room-name">1-D</span><span id="status-1D" class="status returned"></span></th><td id="name-1D"></td><td></td><td></td><td></td></tr>
         <tr><th id="room-1E" class="clickable"><span class="room-name">1-E</span><span id="status-1E" class="status returned"></span></th><td id="name-1E"></td><td></td><td></td><td></td></tr>
-
         <!-- 2/3年 -->
         <tr><th id="room-2_3A" class="clickable"><span class="room-name">2/3-A</span><span id="status-2_3A" class="status returned"></span></th><td id="name-2_3A"></td><td></td><td></td><td></td></tr>
         <tr><th id="room-2_3B" class="clickable"><span class="room-name">2/3-B</span><span id="status-2_3B" class="status returned"></span></th><td id="name-2_3B"></td><td></td><td></td><td></td></tr>
         <tr><th id="room-2_3C" class="clickable"><span class="room-name">2/3-C</span><span id="status-2_3C" class="status returned"></span></th><td id="name-2_3C"></td><td></td><td></td><td></td></tr>
         <tr><th id="room-2_3D" class="clickable"><span class="room-name">2/3-D</span><span id="status-2_3D" class="status returned"></span></th><td id="name-2_3D"></td><td></td><td></td><td></td></tr>
-
         <!-- 専門教室 -->
         <tr><th id="room-specialA" class="clickable"><span class="room-name">専-A</span><span id="status-specialA" class="status returned"></span></th><td id="name-specialA"></td><td></td><td></td><td></td></tr>
         <tr><th id="room-specialB" class="clickable"><span class="room-name">専-B</span><span id="status-specialB" class="status returned"></span></th><td id="name-specialB"></td><td></td><td></td><td></td></tr>
@@ -39,7 +37,7 @@
         <tr><th id="room-specialD" class="clickable"><span class="room-name">専-D</span><span id="status-specialD" class="status returned"></span></th><td id="name-specialD"></td><td></td><td></td><td></td></tr>
       </tbody>
     </table>
-
+ 
     <!-- 右側：部活動・設備 -->
     <table class="key-table">
       <thead>
@@ -62,55 +60,92 @@
       </tbody>
     </table>
   </div>
-
-  <!-- 以下省略なし -->
+ 
+  <!-- オーバーレイ・ポップアップ -->
   <div id="overlay"></div>
   <div id="popup">
     <span id="closeIcon" class="close-icon">×</span>
     <div id="popup-content"></div>
   </div>
+ 
+  <!-- 管理者パネル -->
   <div id="adminOverlay"></div>
   <div id="adminPopup">
     <span id="adminClose" class="close-icon">×</span>
     <div id="adminLoginSection">
-      <h2 style="text-align:center; margin-bottom: 10px;">🔐 管理者ページ</h2>
-      <input type="password" id="adminPassword" placeholder="パスワードを入力">
-      <button id="adminLoginBtn">ログイン</button>
-    </div>
-    <div id="adminPanel" style="display: none; flex-direction: row; gap: 20px;">
-      <div style="flex: 1; max-width: 50%; overflow-y: auto;">
-        <h3>📊 教室別 履歴数一覧</h3>
-        <ul id="roomHistoryList"></ul>
-      </div>
-      <div style="flex: 1; max-width: 50%; overflow-y: auto;">
-        <h3>📅 履歴削除</h3>
-        <label>教室名:
-          <select id="adminSelect"></select>
-        </label><br><br>
-        <label>削除する日付（例: 07/01）:
-          <input type="text" id="adminDate">
-        </label><br><br>
-        <button id="deleteHistoryBtn">履歴削除</button>
-        <p id="adminMessage"></p>
-        <h3>📝 教室名変更</h3>
-        <label>教室を選択:
-          <select id="renameSelect"></select>
-        </label><br><br>
-        <label>新しい名前:
-          <input type="text" id="newRoomName" placeholder="例: 第1音楽室">
-        </label><br><br>
-        <button id="renameRoomBtn">教室名を変更</button>
-        <p id="renameMessage"></p>
-      </div>
-      <div id="employeeAddSection">
-        <h3>🆕 従業員追加</h3>
-        <input type="text" id="newEmpNumber" placeholder="従業員番号（7桁）" />
-        <input type="text" id="newEmpName" placeholder="氏名" />
-        <button id="addEmployeeBtn">追加</button>
-        <p id="employeeAddMessage" style="color: green; font-weight: bold;"></p>
-      </div>
-
-    </div>
+  <h2 style="text-align:center; margin-bottom: 10px;">🔐 管理者ページ</h2> <!-- 追加 -->
+  <input type="password" id="adminPassword" placeholder="パスワードを入力">
+  <button id="adminLoginBtn">ログイン</button>
+</div>
+ 
+<div id="adminPanel" style="display: none;">
+  <div class="left-panel">
+    <h3>📊 教室別 履歴数一覧</h3>
+    <ul id="roomHistoryList"></ul>
+  </div>
+ 
+  <div class="right-panel">
+    <h3>📅 履歴削除</h3>
+    <label>教室名:
+      <select id="adminSelect">
+          <option value="">-- 教室を選択 --</option>
+        <option value="1-A">1-A</option>
+        <option value="1-B">1-B</option>
+        <option value="1-C">1-C</option>
+        <option value="1-D">1-D</option>
+        <option value="1-E">1-E</option>
+        <option value="2/3-A">2/3-A</option>
+        <option value="2/3-B">2/3-B</option>
+        <option value="2/3-C">2/3-C</option>
+        <option value="2/3-D">2/3-D</option>
+        <option value="専-A">専-A</option>
+        <option value="専-B">専-B</option>
+        <option value="専-C">専-C</option>
+        <option value="専-D">専-D</option>
+        <option value="剣道部">剣道部</option>
+        <option value="陸上部">陸上部</option>
+        <option value="硬式野球部">硬式野球部</option>
+        <option value="サッカー部">サッカー部</option>
+        <option value="バレー/バスケ部">バレー/バスケ部</option>
+        <option value="モノ部">モノ部</option>
+        <option value="音楽室">音楽室</option>
+        <option value="教材準備室">教材準備室</option>
+        <option value="自動車教室">自動車教室</option>
+        <option value="体育倉庫">体育倉庫</option>
+        <option value="電気実習室">電気実習室</option>
+        <option value="製図室">製図室</option>
+        <option value="図書室">図書室</option>
+      </select>
+    </label><br><br>
+    <label>削除する日付（例: 07/01）:
+      <input type="text" id="adminDate">
+    </label><br><br>
+    <button id="deleteHistoryBtn">履歴削除</button>
+    <p id="adminMessage"></p>
+ 
+    <h3>📝 教室名変更</h3>
+    <label>教室を選択:
+      <select id="renameSelect"></select>
+    </label><br><br>
+    <label>新しい名前:
+      <input type="text" id="newRoomName" placeholder="例: 第1音楽室">
+    </label><br><br>
+    <button id="renameRoomBtn">教室名を変更</button>
+    <p id="renameMessage"></p>
+  </div>
+  <div id="employeeAddSection">
+<h3>🆕 従業員追加</h3>
+<input type="text" id="newEmpNumber" placeholder="従業員番号（7桁）" />
+<input type="text" id="newEmpName" placeholder="氏名" />
+<button id="addEmployeeBtn">追加</button>
+<p id="employeeAddMessage" style="color: green; font-weight: bold;"></p>
+</div>
+</div>
+ 
+ 
   </div>
 </body>
 </html>
+ 
+   
+ 
