@@ -1,77 +1,69 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="style.css" />
-  <script src="script.js" defer></script>
-  <title>鍵管理システム</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="style.css" />
+<script src="script.js" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&display=swap" rel="stylesheet">
+<title>鍵管理システム</title>
 </head>
 <body>
-  <div class="header">
-    <h1>鍵管理システム</h1>
-  </div>
-
-  <div class="table-container">
-    <!-- 左の表（教室） -->
-    <table class="key-table">
-      <thead>
-        <tr>
-          <th>教室</th><th>貸出者</th><th>貸出時間</th><th>返却時間</th><th>返却者</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- 通常教室 -->
-        <tr><th id="room-1A" class="clickable">1-A</th><td id="name-1A"></td><td></td><td></td><td></td></tr>
-        <tr><th id="room-1B" class="clickable">1-B</th><td id="name-1B"></td><td></td><td></td><td></td></tr>
-        <tr><th id="room-1C" class="clickable">1-C</th><td id="name-1C"></td><td></td><td></td><td></td></tr>
-        <tr><th id="room-1D" class="clickable">1-D</th><td id="name-1D"></td><td></td><td></td><td></td></tr>
-        <tr><th id="room-1E" class="clickable">1-E</th><td id="name-1E"></td><td></td><td></td><td></td></tr>
-
-        <tr><th id="room-2_3A" class="clickable">2/3-A</th><td id="name-2_3A"></td><td></td><td></td><td></td></tr>
-        <tr><th id="room-2_3B" class="clickable">2/3-B</th><td id="name-2_3B"></td><td></td><td></td><td></td></tr>
-        <tr><th id="room-2_3C" class="clickable">2/3-C</th><td id="name-2_3C"></td><td></td><td></td><td></td></tr>
-        <tr><th id="room-2_3D" class="clickable">2/3-D</th><td id="name-2_3D"></td><td></td><td></td><td></td></tr>
-
-        <!-- 専門教室 -->
-        <tr><th id="room-specialA" class="clickable">専-A</th><td id="name-specialA"></td><td></td><td></td><td></td></tr>
-        <tr><th id="room-specialB" class="clickable">専-B</th><td id="name-specialB"></td><td></td><td></td><td></td></tr>
-        <tr><th id="room-specialC" class="clickable">専-C</th><td id="name-specialC"></td><td></td><td></td><td></td></tr>
-        <tr><th id="room-specialD" class="clickable">専-D</th><td id="name-specialD"></td><td></td><td></td><td></td></tr>
-      </tbody>
-    </table>
-
-    <!-- 右の表（部活動・設備） -->
-    <table class="key-table">
-      <thead>
-        <tr>
-          <th>教室</th><th>貸出者</th><th>貸出時間</th><th>返却時間</th><th>返却者</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><th id="room-kendo" class="clickable">剣道部</th><td id="name-kendo"></td><td></td><td></td><td></td></tr>
-        <tr><th id="room-rikujo" class="clickable">陸上部</th><td id="name-rikujo"></td><td></td><td></td><td></td></tr>
-        <tr><th id="room-baseball" class="clickable">硬式野球部</th><td id="name-baseball"></td><td></td><td></td><td></td></tr>
-        <tr><th id="room-soccer" class="clickable">サッカー部</th><td id="name-soccer"></td><td></td><td></td><td></td></tr>
-        <tr><th id="room-volley_basket" class="clickable">バレー/バスケ部</th><td id="name-volley_basket"></td><td></td><td></td><td></td></tr>
-        <tr><th id="room-mono" class="clickable">モノ部</th><td id="name-mono"></td><td></td><td></td><td></td></tr>
-        <tr><th id="room-music" class="clickable">音楽室</th><td id="name-music"></td><td></td><td></td><td></td></tr>
-        <tr><th id="room-kyozai" class="clickable">教材準備室</th><td id="name-kyozai"></td><td></td><td></td><td></td></tr>
-        <tr><th id="room-car" class="clickable">自動車教室</th><td id="name-car"></td><td></td><td></td><td></td></tr>
-        <tr><th id="room-taiku" class="clickable">体育倉庫</th><td id="name-taiku"></td><td></td><td></td><td></td></tr>
-        <tr><th id="room-denki" class="clickable">電気実習室</th><td id="name-denki"></td><td></td><td></td><td></td></tr>
-        <tr><th id="room-seizu" class="clickable">製図室</th><td id="name-seizu"></td><td></td><td></td><td></td></tr>
-        <tr><th id="room-library" class="clickable">図書室</th><td id="name-library"></td><td></td><td></td><td></td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- ポップアップとオーバーレイ -->
-  <div id="overlay"></div>
-  <div id="popup">
-    <span id="closeIcon" class="close-icon">×</span>
-    <div id="popup-content"></div>
-  </div>
+<div class="header">🔑 鍵管理システム</div>
+<div class="table-container">
+<!-- 左側：教室 -->
+<table class="key-table">
+<thead>
+<tr><th>教室</th><th>貸出者</th><th>貸出時間</th><th>返却時間</th><th>返却者</th></tr>
+</thead>
+<tbody id="left-table-body">
+<tr><th id="room-1A" class="clickable"><span class="room-name">1-A</span><span id="status-1A" class="status returned"></span></th><td id="name-1A"></td><td></td><td></td><td></td></tr>
+<tr><th id="room-1B" class="clickable"><span class="room-name">1-B</span><span id="status-1B" class="status returned"></span></th><td id="name-1B"></td><td></td><td></td><td></td></tr>
+<tr><th id="room-1C" class="clickable"><span class="room-name">1-C</span><span id="status-1C" class="status returned"></span></th><td id="name-1C"></td><td></td><td></td><td></td></tr>
+<tr><th id="room-1D" class="clickable"><span class="room-name">1-D</span><span id="status-1D" class="status returned"></span></th><td id="name-1D"></td><td></td><td></td><td></td></tr>
+<tr><th id="room-1E" class="clickable"><span class="room-name">1-E</span><span id="status-1E" class="status returned"></span></th><td id="name-1E"></td><td></td><td></td><td></td></tr>
+ 
+        <tr><th id="room-2_3A" class="clickable"><span class="room-name">2/3-A</span><span id="status-2_3A" class="status returned"></span></th><td id="name-2_3A"></td><td></td><td></td><td></td></tr>
+<tr><th id="room-2_3B" class="clickable"><span class="room-name">2/3-B</span><span id="status-2_3B" class="status returned"></span></th><td id="name-2_3B"></td><td></td><td></td><td></td></tr>
+<tr><th id="room-2_3C" class="clickable"><span class="room-name">2/3-C</span><span id="status-2_3C" class="status returned"></span></th><td id="name-2_3C"></td><td></td><td></td><td></td></tr>
+<tr><th id="room-2_3D" class="clickable"><span class="room-name">2/3-D</span><span id="status-2_3D" class="status returned"></span></th><td id="name-2_3D"></td><td></td><td></td><td></td></tr>
+ 
+        <tr><th id="room-specialA" class="clickable"><span class="room-name">専-A</span><span id="status-specialA" class="status returned"></span></th><td id="name-specialA"></td><td></td><td></td><td></td></tr>
+<tr><th id="room-specialB" class="clickable"><span class="room-name">専-B</span><span id="status-specialB" class="status returned"></span></th><td id="name-specialB"></td><td></td><td></td><td></td></tr>
+<tr><th id="room-specialC" class="clickable"><span class="room-name">専-C</span><span id="status-specialC" class="status returned"></span></th><td id="name-specialC"></td><td></td><td></td><td></td></tr>
+<tr><th id="room-specialD" class="clickable"><span class="room-name">専-D</span><span id="status-specialD" class="status returned"></span></th><td id="name-specialD"></td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+ 
+    <!-- 右側：部活・設備 -->
+<table class="key-table">
+<thead>
+<tr><th>教室</th><th>貸出者</th><th>貸出時間</th><th>返却時間</th><th>返却者</th></tr>
+</thead>
+<tbody id="right-table-body">
+<tr><th id="room-kendo" class="clickable"><span class="room-name">剣道部</span><span id="status-kendo" class="status returned"></span></th><td id="name-kendo"></td><td></td><td></td><td></td></tr>
+<tr><th id="room-rikujo" class="clickable"><span class="room-name">陸上部</span><span id="status-rikujo" class="status returned"></span></th><td id="name-rikujo"></td><td></td><td></td><td></td></tr>
+<tr><th id="room-baseball" class="clickable"><span class="room-name">硬式野球部</span><span id="status-baseball" class="status returned"></span></th><td id="name-baseball"></td><td></td><td></td><td></td></tr>
+<tr><th id="room-soccer" class="clickable"><span class="room-name">サッカー部</span><span id="status-soccer" class="status returned"></span></th><td id="name-soccer"></td><td></td><td></td><td></td></tr>
+<tr><th id="room-volley_basket" class="clickable"><span class="room-name">バレー/バスケ部</span><span id="status-volley_basket" class="status returned"></span></th><td id="name-volley_basket"></td><td></td><td></td><td></td></tr>
+<tr><th id="room-mono" class="clickable"><span class="room-name">モノ部</span><span id="status-mono" class="status returned"></span></th><td id="name-mono"></td><td></td><td></td><td></td></tr>
+<tr><th id="room-music" class="clickable"><span class="room-name">音楽室</span><span id="status-music" class="status returned"></span></th><td id="name-music"></td><td></td><td></td><td></td></tr>
+<tr><th id="room-kyozai" class="clickable"><span class="room-name">教材準備室</span><span id="status-kyozai" class="status returned"></span></th><td id="name-kyozai"></td><td></td><td></td><td></td></tr>
+<tr><th id="room-car" class="clickable"><span class="room-name">自動車教室</span><span id="status-car" class="status returned"></span></th><td id="name-car"></td><td></td><td></td><td></td></tr>
+<tr><th id="room-taiku" class="clickable"><span class="room-name">体育倉庫</span><span id="status-taiku" class="status returned"></span></th><td id="name-taiku"></td><td></td><td></td><td></td></tr>
+<tr><th id="room-denki" class="clickable"><span class="room-name">電気実習室</span><span id="status-denki" class="status returned"></span></th><td id="name-denki"></td><td></td><td></td><td></td></tr>
+<tr><th id="room-seizu" class="clickable"><span class="room-name">製図室</span><span id="status-seizu" class="status returned"></span></th><td id="name-seizu"></td><td></td><td></td><td></td></tr>
+<tr><th id="room-library" class="clickable"><span class="room-name">図書室</span><span id="status-library" class="status returned"></span></th><td id="name-library"></td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+</div>
+ 
+  <!-- ポップアップ -->
+<div id="overlay"></div>
+<div id="popup">
+<span id="closeIcon" class="close-icon">×</span>
+<div id="popup-content"></div>
+</div>
 </body>
 </html>
+ 
