@@ -274,7 +274,7 @@ th, td {
 /* 管理者パネル本体 */
 #adminPopup {
   display: none;
-  width: 600px;
+  width: 90vw;
   max-height: 90vh;
   padding: 30px 20px 20px;
   background-color: white;
@@ -287,7 +287,30 @@ th, td {
   z-index: 1001;
   transition: height 0.3s ease;
   overflow: hidden;
+  overflow-y: auto; /* 縦スクロールを許可 */
+  max-height: 90vh; /* 高さ制限（画面の90%） */
 }
+ 
+#adminPanel {
+  display: flex;
+  flex-direction: row; /* 横並びにする */
+  gap: 20px;
+  flex-wrap: nowrap; /* 折り返さないようにする（必要なら wrap に） */
+  align-items: flex-start; /* 上揃えにする */
+}
+ 
+.left-panel, .right-panel {
+  flex: 1;
+  min-width: 300px;
+}
+ 
+ 
+.left-panel, .right-panel {
+  flex: 1;
+  min-width: 300px;
+}
+ 
+ 
 #adminPopup .close-icon {
   top: 8px;
   right: 12px;
