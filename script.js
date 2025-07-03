@@ -1,11 +1,6 @@
 'use strict';
  
-const employeeData = {
-  "1111111": "たまろう",
-  "1111112": "せいじろう",
-  "1111113": "むーさん",
-  "1111114"'use strict';
- 
+
 let employeeData = {};
  
 if (localStorage.getItem('employeeData')) {
@@ -16,7 +11,8 @@ if (localStorage.getItem('employeeData')) {
     "1111111": "たまろう",
     "1111112": "せいじろう",
     "1111113": "むーさん",
-    "1111114": "Reito"
+    "1111114": "Reito",
+    "1615706": "学園　太郎"
   };
   localStorage.setItem('employeeData', JSON.stringify(employeeData));
 }
