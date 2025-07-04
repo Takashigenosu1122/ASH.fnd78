@@ -38,8 +38,12 @@ window.addEventListener('DOMContentLoaded', () => {
   const popup = document.getElementById('popup');
   const overlay = document.getElementById('overlay');
   const popupContent = document.getElementById('popup-content');
+  
   const closeIcon = document.getElementById('closeIcon');
+  let adminPassword = localStorage.getItem('adminPassword') || 'ASH';
  
+
+
   document.querySelectorAll('.status.returned').forEach(badge => {
     badge.textContent = '✅';
   });
@@ -91,11 +95,12 @@ window.addEventListener('DOMContentLoaded', () => {
  
   function showActionForm() {
   const status = roomStatus[selectedRoomId];
+  const row = document.getElementById(selectedRoomId)?.parentElement;
+  const shortId = selectedRoomId.replace('room-', '');
  
- let buttonsHtml = `
-  <button id="historyBtn" class="popup-button">📝履歴を見る</button>
-`;
- 
+  let buttonsHtml = `
+    <button id="historyBtn" class="popup-button">📝履歴を見る</button>
+  `;
  
   popupContent.innerHTML = `
     <h2>🔑 ${selectedRoomName} の操作</h2>
@@ -106,32 +111,43 @@ window.addEventListener('DOMContentLoaded', () => {
     </div>
   `;
  
-  // 要素取得とフォーカス
   const empInput = document.getElementById('employeeNumber');
   const nameDisplay = document.getElementById('employeeNameDisplay');
  
-  // 入力イベント（半角変換＋7桁制限＋名前表示）
-empInput.addEventListener('input', () => {
-  // 全角→半角変換
-  empInput.value = empInput.value.replace(/[Ａ-Ｚａ-ｚ０-９]/g, s =>
-    String.fromCharCode(s.charCodeAt(0) - 0xFEE0)
-  );
+  empInput.addEventListener('input', () => {
+    const raw = empInput.value;
  
-  // 7桁制限
-  if (empInput.value.length > 7) {
-    empInput.value = empInput.value.slice(0, 7);
-  }
+    // 全角→半角変換（内部処理用）
+    let normalized = raw.replace(/[０-９]/g, s =>
+      String.fromCharCode(s.charCodeAt(0) - 0xFEE0)
+    ).replace(/[^0-9]/g, '');
  
-  // 7桁入力されたら自動処理
-  const name = employeeData[empInput.value]; // ← これを追加
-if (empInput.value.length === 7 && name) {
+    if (normalized.length > 7) {
+      normalized = normalized.slice(0, 7);
+    }
+ 
+    if (normalized.length === 7) {
+      checkEmployee(normalized);
+    }
+  });
+ 
+  function checkEmployee(empNum) {
+    const name = employeeData[empNum];
+    if (!name) {
+      nameDisplay.textContent = '⚠️ 従業員番号が見つかりません';
+      nameDisplay.style.color = 'red';
+      empInput.value = ''; // 入力欄をクリア
+      return;
+    }
+ 
+    nameDisplay.textContent = `${name} さん`;
+    nameDisplay.style.color = 'black';
+ 
     const now = getFormattedDateTime();
-    const row = document.getElementById(selectedRoomId).parentElement;
-    const shortId = selectedRoomId.replace('room-', '');
+    const row = document.getElementById(selectedRoomId)?.parentElement;
     const nameCell = document.getElementById('name-' + shortId);
  
     if (roomStatus[selectedRoomId] === '貸出中') {
-      // 返却処理
       if (row) {
         row.cells[3].textContent = now;
         row.cells[4].textContent = name;
@@ -139,7 +155,6 @@ if (empInput.value.length === 7 && name) {
       historyRecords.push({ room: selectedRoomId, action: '返却', name, time: now });
       roomStatus[selectedRoomId] = '返却済み';
     } else {
-      // 貸出処理
       if (nameCell) nameCell.textContent = name;
       if (row) {
         row.cells[2].textContent = now;
@@ -152,31 +167,20 @@ if (empInput.value.length === 7 && name) {
  
     saveToLocalStorage();
     updateStatusBadges();
+ 
+    empInput.value = '';
+    nameDisplay.textContent = '';
+ 
     closePopup();
   }
-});
-document.getElementById('historyBtn').addEventListener('click', showHistory);
-  }
  
-  function handleReturn() {
-    const empNum = document.getElementById('employeeNumber').value;
-    const name = employeeData[empNum];
-    if (!name) return alert('従業員番号が見つかりません');
-    if (roomStatus[selectedRoomId] !== '貸出中') return alert('まだ貸出されていません');
-    showConfirmation(name, () => {
-      const now = getFormattedDateTime();
-      const row = document.getElementById(selectedRoomId).parentElement;
-      if (row) {
-        row.cells[3].textContent = now;
-        row.cells[4].textContent = name;
-      }
-      historyRecords.push({ room: selectedRoomId, action: '返却', name, time: now });
-      roomStatus[selectedRoomId] = '返却済み';
-      saveToLocalStorage();
-      updateStatusBadges();
-      closePopup();
-    });
+  const historyBtn = document.getElementById('historyBtn');
+  if (historyBtn) {
+    historyBtn.addEventListener('click', showHistory);
   }
+}
+ 
+ 
  
   function showHistory() {
     const filtered = historyRecords.filter(r => r.room === selectedRoomId).reverse();
@@ -255,17 +259,20 @@ document.getElementById('historyBtn').addEventListener('click', showHistory);
   });
  
   document.getElementById('adminLoginBtn').addEventListener('click', () => {
-    const password = document.getElementById('adminPassword').value;
-    if (password === 'ASH') {
-      adminLoginSection.style.display = 'none';
-      adminPanel.style.display = 'block';
-      populateRoomHistoryList();
-      document.getElementById('adminPassword').value = ''; // ← これを追加
-      populateRenameSelect(); // ⬅ 教室名変更の選択肢をセット
-    } else {
-      alert('パスワードが違います');
-    }
-  });
+  const password = document.getElementById('adminPassword').value;
+  const storedPass = localStorage.getItem('adminPassword') || 'ASH'; // ←ここ重要
+
+  if (password === storedPass) {
+    adminLoginSection.style.display = 'none';
+    adminPanel.style.display = 'block';
+    document.getElementById('adminPassword').value = '';
+    populateRoomHistoryList();
+    populateRenameSelect();
+  } else {
+    alert('パスワードが違います');
+  }
+});
+
  
   function populateRoomHistoryList() {
     const list = document.getElementById('roomHistoryList');
@@ -396,6 +403,44 @@ document.getElementById('historyBtn').addEventListener('click', showHistory);
  
 });
  
+
+// パスワード変更処理
+document.getElementById('changePasswordBtn').addEventListener('click', () => {
+  const current = document.getElementById('currentPassword').value;
+  const newPass = document.getElementById('newPassword').value;
+  const confirm = document.getElementById('confirmPassword').value;
+  const msg = document.getElementById('passwordChangeMessage');
+
+  const storedPass = localStorage.getItem('adminPassword') || 'ASH';
+
+  if (current !== storedPass) {
+    msg.textContent = '❌ 現在のパスワードが違います';
+    msg.style.color = 'red';
+    return;
+  }
+
+  if (newPass.length < 3) {
+    msg.textContent = '⚠️ パスワードは3文字以上にしてください';
+    msg.style.color = 'orange';
+    return;
+  }
+
+  if (newPass !== confirm) {
+    msg.textContent = '⚠️ 新しいパスワードが一致しません';
+    msg.style.color = 'orange';
+    return;
+  }
+
+  localStorage.setItem('adminPassword', newPass);
+  msg.textContent = '✅ パスワードを変更しました';
+  msg.style.color = 'green';
+
+  // 入力欄クリア
+  document.getElementById('currentPassword').value = '';
+  document.getElementById('newPassword').value = '';
+  document.getElementById('confirmPassword').value = '';
+});
+
  
 });
  
